@@ -33,3 +33,7 @@ If my understanding of ```setRetainedInstance(true)``` is correct, then this log
 ```
 11-01 23:18:12.694  14136-14136/? D/testroids.LeagueFragment﹕ league name: null
 ```
+
+Reproducing it
+===
+If you run the application and press "Baseball", then "Team One", then the "home" button. You'll notice that the title is blank when it should say "Baseball"
