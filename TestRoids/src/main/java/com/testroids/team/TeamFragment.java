@@ -64,7 +64,7 @@ public class TeamFragment extends Fragment implements LoaderManager.LoaderCallba
         Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
         if (getArguments() != null) {
             mTeamName = getArguments().getString(EXTRA_TEAM_NAME);

@@ -60,11 +60,21 @@ public class LeagueFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Log.d(TAG, "onActivityCreated - savedInstanceState: " + savedInstanceState);
+        if (savedInstanceState != null) {
+            Log.d(TAG, "onActivityCreated - league name: " + savedInstanceState.getString(EXTRA_LEAGUE_NAME));
+            mLeagueName = savedInstanceState.getString(EXTRA_LEAGUE_NAME);
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
+        Log.d(TAG, "onCreate - savedInstanceState: " + savedInstanceState);
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
+        //setRetainInstance(true);
 
         if (getArguments() != null) {
             mLeagueName = getArguments().getString(EXTRA_LEAGUE_NAME);
@@ -73,8 +83,12 @@ public class LeagueFragment extends Fragment implements LoaderManager.LoaderCall
             getActivity().setTitle("NULL");
         }
 
+        if(savedInstanceState != null) {
+            Log.d(TAG, "onCreate - savedInstanceState: " + savedInstanceState + ", league name: " + savedInstanceState.getString(EXTRA_LEAGUE_NAME));
+        }
+
         // mLeagueName shouldn't be null on back button
-        Log.d(TAG, "league name: " + mLeagueName);
+        Log.d(TAG, "onCreate - league name: " + mLeagueName);
 
         getLoaderManager().initLoader(0, getArguments(), this);
     }
@@ -82,7 +96,7 @@ public class LeagueFragment extends Fragment implements LoaderManager.LoaderCall
     @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.d(TAG, "onCreateView");
+        Log.d(TAG, "onCreateView - savedInstanceState: " + savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_grid_view, container, false);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -115,5 +129,12 @@ public class LeagueFragment extends Fragment implements LoaderManager.LoaderCall
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putString(EXTRA_LEAGUE_NAME, mLeagueName);
+        Log.d(TAG, "onSaveInstanceState - outState: " + outState + ", league name: " + outState.getString(EXTRA_LEAGUE_NAME));
+        super.onSaveInstanceState(outState);
     }
 }
